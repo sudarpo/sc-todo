@@ -24,16 +24,22 @@ export default class App extends Component {
   };
 
   handleTaskEdit = (task) => {
-    console.log("Edit", task);
     this.setState({ taskToEdit: { ...task } });
   };
 
   handleSubmit = (task) => {
-    console.log("Submit", task);
+    // console.log("Submit", task);
     if (task.id === 0) {
       task.id = Date.now() * 2;
       const allTasks = [...this.state.tasksList, task];
       this.setState({ tasksList: allTasks });
+    } else {
+      let allTasks = [...this.state.tasksList];
+      let index = allTasks.findIndex((t) => t.id === task.id);
+      let taskToUpdate = { ...allTasks[index] };
+      taskToUpdate.title = task.title;
+      allTasks[index] = taskToUpdate;
+      this.setState({ tasksList: allTasks, taskToEdit: {} });
     }
   };
 
