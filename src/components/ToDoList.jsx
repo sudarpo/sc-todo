@@ -1,7 +1,14 @@
 import React from "react";
 
 export default function ToDoList(props) {
-  const { tasksList, onTaskComplete, onTaskDelete, onTaskEdit } = props;
+  const {
+    tasksList,
+    onTaskComplete,
+    onTaskUndoComplete,
+    onTaskDelete,
+    onTaskEdit,
+  } = props;
+
   const countPending = tasksList.filter((t) => t.completed === false).length;
   const countCompleted = tasksList.length - countPending;
 
@@ -9,7 +16,17 @@ export default function ToDoList(props) {
     return (
       <span className="float-right">
         {task.completed ? (
-          <span className="badge badge-success m-1">done</span>
+          <>
+            <span className="badge badge-success m-1">done</span>
+            <button
+              type="button"
+              title="Undo"
+              className="btn btn-sm btn-secondary mr-1"
+              onClick={() => onTaskUndoComplete(task)}
+            >
+              <i className="fa fa-undo" aria-hidden="true"></i>
+            </button>
+          </>
         ) : (
           <>
             <span className="badge badge-warning m-1"></span>

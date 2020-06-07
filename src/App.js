@@ -9,13 +9,21 @@ export default class App extends Component {
     taskToEdit: {},
   };
 
-  handleTaskComplete = (task) => {
+  toggleCompleteTask = (task) => {
     const allTasks = [...this.state.tasksList];
     const index = allTasks.findIndex((t) => t.id === task.id);
     const task1 = { ...allTasks[index] };
-    task1.completed = true;
+    task1.completed = !task.completed;
     allTasks[index] = task1;
     this.setState({ tasksList: allTasks });
+  };
+
+  handleTaskComplete = (task) => {
+    this.toggleCompleteTask(task);
+  };
+
+  handleTaskUndoComplete = (task) => {
+    this.toggleCompleteTask(task);
   };
 
   handleTaskDelete = (task) => {
@@ -53,6 +61,7 @@ export default class App extends Component {
             <ToDoList
               tasksList={tasksList}
               onTaskComplete={this.handleTaskComplete}
+              onTaskUndoComplete={this.handleTaskUndoComplete}
               onTaskDelete={this.handleTaskDelete}
               onTaskEdit={this.handleTaskEdit}
             />
