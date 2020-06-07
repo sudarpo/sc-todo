@@ -6,7 +6,7 @@ import InitialTasksList from "./tempDummyList.json";
 export default class App extends Component {
   state = {
     tasksList: InitialTasksList,
-    taskToEdit: {},
+    taskToEdit: { id: 0 },
   };
 
   toggleCompleteTask = (task) => {
@@ -29,6 +29,9 @@ export default class App extends Component {
   handleTaskDelete = (task) => {
     let filtered = [...this.state.tasksList].filter((t) => t.id !== task.id);
     this.setState({ tasksList: filtered });
+    if (task.id === this.state.taskToEdit.id) {
+      this.setState({ taskToEdit: { id: 0, deleted: true } });
+    }
   };
 
   handleTaskEdit = (task) => {
@@ -37,6 +40,14 @@ export default class App extends Component {
 
   handleSubmit = (task) => {
     // console.log("Submit", task);
+    const filteredTask = this.state.tasksList.filter(
+      (t) => t.title.trim().toUpperCase() === task.title.trim().toUpperCase()
+    );
+    if (filteredTask.length > 0) {
+      console.error("Duplicate task entered", task.title.trim().toUpperCase());
+      return;
+    }
+
     if (task.id === 0) {
       task.id = Date.now() * 2;
       const allTasks = [...this.state.tasksList, task];
@@ -47,7 +58,7 @@ export default class App extends Component {
       let taskToUpdate = { ...allTasks[index] };
       taskToUpdate.title = task.title;
       allTasks[index] = taskToUpdate;
-      this.setState({ tasksList: allTasks, taskToEdit: {} });
+      this.setState({ tasksList: allTasks, taskToEdit: { id: 0 } });
     }
   };
 

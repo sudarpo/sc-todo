@@ -7,11 +7,18 @@ export default class ToDoForm extends Component {
   };
 
   componentDidUpdate = () => {
-    // console.log(this.state.taskTitle, "componentDidUpdate", this.props.task);
+    // console.log(this.state, "componentDidUpdate", this.props.task);
     const { task } = this.props;
 
+    // If task is selected, and deleted from parent component
+    if (task.id === 0 && task.deleted) {
+      this.setState({ taskTitle: "" });
+      task.deleted = false;
+    }
+
+    // Pass selected task for Update
     if (this.state.taskTitle === "" && task.title) {
-      console.log("task title is not undefined OR not empty", task.title);
+      // console.log("task title is not undefined OR not empty", task.title);
       this.setState({ taskTitle: task.title });
     }
   };
@@ -37,7 +44,7 @@ export default class ToDoForm extends Component {
 
   renderTitle = () => {
     const { task } = this.props;
-    return task && task.id === undefined ? "Add New Task" : "Edit Task";
+    return task && task.id === 0 ? "Add New Task" : "Edit Task";
   };
 
   render() {

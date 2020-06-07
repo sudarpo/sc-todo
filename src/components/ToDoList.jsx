@@ -65,7 +65,7 @@ export default function ToDoList(props) {
     <>
       <div className="card">
         <div className="card-header">
-          {tasksList.length} items ~ {countPending} pending ~ {countCompleted}{" "}
+          {tasksList.length} tasks ~ {countPending} pending ~ {countCompleted}{" "}
           completed
         </div>
         <div className="card-body">
