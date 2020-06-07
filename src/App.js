@@ -1,87 +1,91 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import ToDoList from "./components/ToDoList";
 import ToDoForm from "./components/ToDoForm";
 import InitialTasksList from "./tempDummyList.json";
 
-export default class App extends Component {
-  state = {
-    tasksList: InitialTasksList,
-    taskToEdit: { id: 0 },
-  };
+const emptyIdZero = { id: 0 };
 
-  toggleCompleteTask = (task) => {
-    const allTasks = [...this.state.tasksList];
+const App = () => {
+  const [taskToEdit, setTaskToEdit] = useState(emptyIdZero);
+  const [tasksList, setTasks] = useState(InitialTasksList);
+
+  const toggleCompleteTask = (task) => {
+    const allTasks = [...tasksList];
     const index = allTasks.findIndex((t) => t.id === task.id);
     const task1 = { ...allTasks[index] };
     task1.completed = !task.completed;
     allTasks[index] = task1;
-    this.setState({ tasksList: allTasks });
+    setTasks(allTasks);
   };
 
-  handleTaskComplete = (task) => {
-    this.toggleCompleteTask(task);
+  const handleTaskComplete = (task) => {
+    toggleCompleteTask(task);
   };
 
-  handleTaskUndoComplete = (task) => {
-    this.toggleCompleteTask(task);
+  const handleTaskUndoComplete = (task) => {
+    toggleCompleteTask(task);
   };
 
-  handleTaskDelete = (task) => {
-    let filtered = [...this.state.tasksList].filter((t) => t.id !== task.id);
-    this.setState({ tasksList: filtered });
-    if (task.id === this.state.taskToEdit.id) {
-      this.setState({ taskToEdit: { id: 0, deleted: true } });
+  const handleTaskDelete = (task) => {
+    let filtered = [...tasksList].filter((t) => t.id !== task.id);
+    setTasks(filtered);
+    if (task.id === taskToEdit.id) {
+      // this.setState({ taskToEdit: { id: 0, deleted: true } });
+      setTaskToEdit({ ...emptyIdZero, deleted: true });
     }
   };
 
-  handleTaskEdit = (task) => {
-    this.setState({ taskToEdit: { ...task } });
+  const handleTaskEdit = (task) => {
+    setTaskToEdit({ ...task });
   };
 
-  handleSubmit = (task) => {
+  const handleSubmit = (task) => {
     // console.log("Submit", task);
-    const filteredTask = this.state.tasksList.filter(
-      (t) => t.title.trim().toUpperCase() === task.title.trim().toUpperCase()
-    );
-    if (filteredTask.length > 0) {
-      console.error("Duplicate task entered", task.title.trim().toUpperCase());
-      return;
-    }
 
     if (task.id === 0) {
+      const filteredTask = tasksList.filter(
+        (t) => t.title.trim().toUpperCase() === task.title.trim().toUpperCase()
+      );
+      if (filteredTask.length > 0) {
+        console.error(
+          "Duplicate task entered",
+          task.title.trim().toUpperCase()
+        );
+        return;
+      }
+
       task.id = Date.now() * 2;
-      const allTasks = [...this.state.tasksList, task];
-      this.setState({ tasksList: allTasks });
+      const allTasks = [...tasksList, task];
+      setTasks(allTasks);
     } else {
-      let allTasks = [...this.state.tasksList];
+      let allTasks = [...tasksList];
       let index = allTasks.findIndex((t) => t.id === task.id);
       let taskToUpdate = { ...allTasks[index] };
       taskToUpdate.title = task.title;
       allTasks[index] = taskToUpdate;
-      this.setState({ tasksList: allTasks, taskToEdit: { id: 0 } });
+      setTasks(allTasks);
+      setTaskToEdit(emptyIdZero);
     }
   };
 
-  render() {
-    const { tasksList, taskToEdit } = this.state;
-
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="col">
-            <ToDoList
-              tasksList={tasksList}
-              onTaskComplete={this.handleTaskComplete}
-              onTaskUndoComplete={this.handleTaskUndoComplete}
-              onTaskDelete={this.handleTaskDelete}
-              onTaskEdit={this.handleTaskEdit}
-            />
-          </div>
-          <div className="col">
-            <ToDoForm onSubmit={this.handleSubmit} task={taskToEdit} />
-          </div>
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col">
+          <ToDoList
+            tasksList={tasksList}
+            onTaskComplete={handleTaskComplete}
+            onTaskUndoComplete={handleTaskUndoComplete}
+            onTaskDelete={handleTaskDelete}
+            onTaskEdit={handleTaskEdit}
+          />
+        </div>
+        <div className="col">
+          <ToDoForm onSubmit={handleSubmit} task={taskToEdit} />
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default App;
