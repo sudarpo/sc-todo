@@ -1,9 +1,9 @@
 import React from "react";
 
 export default function ToDoList(props) {
-  const { Tasks, onTaskComplete, onTaskDelete, onTaskEdit } = props;
-  const countPending = Tasks.filter((t) => t.completed === false).length;
-  const countCompleted = Tasks.length - countPending;
+  const { tasksList, onTaskComplete, onTaskDelete, onTaskEdit } = props;
+  const countPending = tasksList.filter((t) => t.completed === false).length;
+  const countCompleted = tasksList.length - countPending;
 
   const renderAction = (task) => {
     return (
@@ -48,12 +48,12 @@ export default function ToDoList(props) {
     <>
       <div className="card">
         <div className="card-header">
-          {Tasks.length} items ~ {countPending} pending ~ {countCompleted}{" "}
+          {tasksList.length} items ~ {countPending} pending ~ {countCompleted}{" "}
           completed
         </div>
         <div className="card-body">
           <div className="list-group">
-            {Tasks.map((task) => {
+            {tasksList.map((task) => {
               return (
                 <div className="list-group-item" key={task.id}>
                   <i className="fa fa-dot-circle-o mr-2" aria-hidden="true"></i>

@@ -1,46 +1,58 @@
 import React, { Component } from "react";
 import ToDoList from "./components/ToDoList";
+import ToDoForm from "./components/ToDoForm";
 import InitialTasksList from "./tempDummyList.json";
 
 export default class App extends Component {
   state = {
-    Tasks: InitialTasksList,
+    tasksList: InitialTasksList,
+    taskToEdit: {},
   };
 
   handleTaskComplete = (task) => {
-    const allTasks = [...this.state.Tasks];
+    const allTasks = [...this.state.tasksList];
     const index = allTasks.findIndex((t) => t.id === task.id);
     const task1 = { ...allTasks[index] };
     task1.completed = true;
     allTasks[index] = task1;
-    this.setState({ Tasks: allTasks });
+    this.setState({ tasksList: allTasks });
   };
 
   handleTaskDelete = (task) => {
-    let filtered = [...this.state.Tasks].filter((t) => t.id !== task.id);
-    this.setState({ Tasks: filtered });
+    let filtered = [...this.state.tasksList].filter((t) => t.id !== task.id);
+    this.setState({ tasksList: filtered });
   };
 
   handleTaskEdit = (task) => {
     console.log("Edit", task);
+    this.setState({ taskToEdit: { ...task } });
+  };
+
+  handleSubmit = (task) => {
+    console.log("Submit", task);
+    if (task.id === 0) {
+      task.id = Date.now() * 2;
+      const allTasks = [...this.state.tasksList, task];
+      this.setState({ tasksList: allTasks });
+    }
   };
 
   render() {
-    const { Tasks } = this.state;
+    const { tasksList, taskToEdit } = this.state;
 
     return (
       <div className="container">
         <div className="row">
           <div className="col">
             <ToDoList
-              Tasks={Tasks}
+              tasksList={tasksList}
               onTaskComplete={this.handleTaskComplete}
               onTaskDelete={this.handleTaskDelete}
               onTaskEdit={this.handleTaskEdit}
             />
           </div>
           <div className="col">
-            <h1>INPUT FORM HERE</h1>
+            <ToDoForm onSubmit={this.handleSubmit} task={taskToEdit} />
           </div>
         </div>
       </div>
