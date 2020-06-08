@@ -12,7 +12,7 @@ const ToDoForm = (props) => {
     } else {
       setTaskTitle("");
     }
-  }, [props]);
+  }, [props.task.id]);
 
   const handleChange = (e) => {
     setTaskTitle(e.currentTarget.value);
@@ -21,6 +21,7 @@ const ToDoForm = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // console.log("submitted");
     if (taskTitle.trim().length === 0) return;
 
     const { task } = props;
@@ -30,7 +31,7 @@ const ToDoForm = (props) => {
       props.onSubmit({ title: taskTitle, id: 0 });
     }
 
-    setTaskTitle("");
+    // setTaskTitle("");
   };
 
   const renderTitle = () => {

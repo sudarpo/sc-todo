@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ToDoList from "./ToDoList";
 import ToDoForm from "./ToDoForm";
-import { getTodoList, createToDo, editToDo } from "./services/ToDoService";
+import {
+  getTodoList,
+  createToDo,
+  editToDo,
+  deleteToDo,
+} from "./services/ToDoService";
 
 const emptyIdZero = { id: 0 };
 
@@ -37,13 +42,20 @@ export default function ToDoApp() {
     toggleCompleteTask(task);
   };
 
-  const handleTaskDelete = (task) => {
+  const handleTaskDelete = async (task) => {
+    setIsLoading(true);
+
     let filtered = [...tasksList].filter((t) => t.id !== task.id);
     setTasks(filtered);
     if (task.id === taskToEdit.id) {
       // this.setState({ taskToEdit: { id: 0, deleted: true } });
       setTaskToEdit({ ...emptyIdZero, deleted: true });
     }
+
+    const { data } = await deleteToDo(task);
+    console.log(data);
+
+    setIsLoading(false);
   };
 
   const handleTaskEdit = (task) => {
@@ -83,7 +95,7 @@ export default function ToDoApp() {
       const response = await editToDo(task);
       let data = response.data;
 
-      allTasks[index] = taskToUpdate;
+      allTasks[index] = { ...taskToUpdate, data };
       setTasks(allTasks);
       setTaskToEdit(emptyIdZero);
       setIsLoading(false);
