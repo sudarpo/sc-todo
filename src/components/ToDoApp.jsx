@@ -178,8 +178,8 @@ export default function ToDoApp() {
       <div className="container-fluid">
         {isLoading && (
           <>
-            <div className="fixed-top">
-              <i className="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+            <div className="fixed-top sc-spinner">
+              <i className="fa fa-spinner fa-spin fa-fw"></i>
               <span className="sr-only">Loading...</span>
             </div>
           </>
