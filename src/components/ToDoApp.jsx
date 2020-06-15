@@ -157,29 +157,31 @@ export default function ToDoApp() {
   };
 
   return (
-    <div className="container">
-      {isLoading && (
-        <>
-          <div className="fixed-top">
-            <i className="fa fa-spinner fa-spin fa-3x fa-fw"></i>
-            <span className="sr-only">Loading...</span>
+    <>
+      <div className="container-fluid">
+        {isLoading && (
+          <>
+            <div className="fixed-top">
+              <i className="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+              <span className="sr-only">Loading...</span>
+            </div>
+          </>
+        )}
+        <div className="row">
+          <div className="col-md">
+            <ToDoForm onSubmit={handleSubmit} task={taskToEdit} />
           </div>
-        </>
-      )}
-      <div className="row">
-        <div className="col">
-          <ToDoList
-            tasksList={tasksList}
-            onTaskComplete={handleTaskComplete}
-            onTaskUndoComplete={handleTaskUndoComplete}
-            onTaskDelete={handleTaskDelete}
-            onTaskEdit={handleTaskEdit}
-          />
-        </div>
-        <div className="col">
-          <ToDoForm onSubmit={handleSubmit} task={taskToEdit} />
+          <div className="col-md">
+            <ToDoList
+              tasksList={tasksList}
+              onTaskComplete={handleTaskComplete}
+              onTaskUndoComplete={handleTaskUndoComplete}
+              onTaskDelete={handleTaskDelete}
+              onTaskEdit={handleTaskEdit}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

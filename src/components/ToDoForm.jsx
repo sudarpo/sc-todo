@@ -56,7 +56,7 @@ const ToDoForm = (props) => {
           </div>
         </div>
       </form>
-      <pre>{props.task.id}</pre>
+      <pre hidden>{props.task.id}</pre>
     </>
   );
 };
