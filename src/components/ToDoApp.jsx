@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { toast } from "react-toastify";
 import ToDoList from "./ToDoList";
 import ToDoForm from "./ToDoForm";
 import { getTodoList, createToDo, editToDo, deleteToDo } from "./services/ToDoService";
-import { toast } from "react-toastify";
+import AllContext from "./hooks/AllContext";
 
 const emptyIdZero = { id: 0 };
 
@@ -10,10 +11,18 @@ export default function ToDoApp() {
   const [isLoading, setIsLoading] = useState(true);
   const [taskToEdit, setTaskToEdit] = useState(emptyIdZero);
   const [tasksList, setTasks] = useState([]);
+  const [isEntryMode, setIsEntryMode] = useState(false);
+  const allContext = useContext(AllContext);
 
   useEffect(() => {
     getTodos();
   }, []);
+
+  useEffect(() => {
+    const appMode = allContext.mode;
+    console.log("App mode = ", appMode);
+    setIsEntryMode(appMode === "NewTask" || appMode === "EditTask");
+  }, [allContext.mode]);
 
   const getTodos = async () => {
     const { data } = await getTodoList();
@@ -90,6 +99,12 @@ export default function ToDoApp() {
 
   const handleTaskEdit = (task) => {
     setTaskToEdit({ ...task });
+    allContext.changeMode("EditTask");
+  };
+
+  const handleCancelEdit = (task) => {
+    setTaskToEdit(emptyIdZero);
+    allContext.changeMode("EditTaskCancelled");
   };
 
   const createNewTodo = async (task) => {
@@ -115,6 +130,7 @@ export default function ToDoApp() {
       toast.error("Unable to create to do. Error: " + error);
     }
 
+    allContext.changeMode("NewTaskDone");
     setIsLoading(false);
   };
 
@@ -143,6 +159,7 @@ export default function ToDoApp() {
       setTasks(originalTasks);
     }
 
+    allContext.changeMode("EditTaskDone");
     setIsLoading(false);
   };
 
@@ -168,9 +185,11 @@ export default function ToDoApp() {
           </>
         )}
         <div className="row">
-          <div className="col-md">
-            <ToDoForm onSubmit={handleSubmit} task={taskToEdit} />
-          </div>
+          {isEntryMode && (
+            <div className="col-md">
+              <ToDoForm onSubmit={handleSubmit} task={taskToEdit} onCancel={handleCancelEdit} />
+            </div>
+          )}
           <div className="col-md">
             <ToDoList
               tasksList={tasksList}

@@ -1,14 +1,24 @@
-import React from "react";
-import ToDoApp from "./components/ToDoApp";
+import React, { useState } from "react";
 import { ToastContainer } from "react-toastify";
+import ToDoApp from "./components/ToDoApp";
 import NavBar from "./components/navBar";
+import AllContext from "./components/hooks/AllContext";
 
 const App = () => {
+  const [appMode, setAppMode] = useState("");
+
+  const handleChangeMode = (newMode) => {
+    setAppMode(newMode);
+    console.log(appMode, "--->", newMode);
+  };
+
   return (
     <>
-      <NavBar />
-      <ToDoApp />
-      <ToastContainer />
+      <AllContext.Provider value={{ mode: appMode, changeMode: handleChangeMode }}>
+        <NavBar />
+        <ToDoApp />
+        <ToastContainer />
+      </AllContext.Provider>
     </>
   );
 };

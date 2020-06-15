@@ -38,6 +38,14 @@ const ToDoForm = (props) => {
     setTaskTitle("");
   };
 
+  const handleCancel = (e) => {
+    e.preventDefault();
+
+    props.onCancel();
+    setOldTitle("");
+    setTaskTitle("");
+  };
+
   const renderTitle = () => {
     const { task } = props;
     return task && task.id === 0 ? "Add New Task" : "Edit Task";
@@ -52,6 +60,9 @@ const ToDoForm = (props) => {
             <InputControl label="Task Detail" name="taskDetail" type="text" value={taskTitle} onChange={handleChange} />
             <button type="submit" className="btn btn-primary btn-sm">
               Save
+            </button>
+            <button type="button" className="btn btn-warning btn-sm ml-2" onClick={handleCancel}>
+              Cancel
             </button>
           </div>
         </div>
