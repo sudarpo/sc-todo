@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/sc-todo/static/css/main.a8c31ff4.chunk.css",
+    "main.js": "/sc-todo/static/js/main.9c3cec36.chunk.js",
+    "main.js.map": "/sc-todo/static/js/main.9c3cec36.chunk.js.map",
+    "runtime-main.js": "/sc-todo/static/js/runtime-main.f9f88225.js",
+    "runtime-main.js.map": "/sc-todo/static/js/runtime-main.f9f88225.js.map",
+    "static/css/2.2c9b5726.chunk.css": "/sc-todo/static/css/2.2c9b5726.chunk.css",
+    "static/js/2.712695ce.chunk.js": "/sc-todo/static/js/2.712695ce.chunk.js",
+    "static/js/2.712695ce.chunk.js.map": "/sc-todo/static/js/2.712695ce.chunk.js.map",
+    "index.html": "/sc-todo/index.html",
+    "precache-manifest.91c179e7bf87d441ca4261bb0a9f7315.js": "/sc-todo/precache-manifest.91c179e7bf87d441ca4261bb0a9f7315.js",
+    "service-worker.js": "/sc-todo/service-worker.js",
+    "static/css/2.2c9b5726.chunk.css.map": "/sc-todo/static/css/2.2c9b5726.chunk.css.map",
+    "static/css/main.a8c31ff4.chunk.css.map": "/sc-todo/static/css/main.a8c31ff4.chunk.css.map",
+    "static/js/2.712695ce.chunk.js.LICENSE.txt": "/sc-todo/static/js/2.712695ce.chunk.js.LICENSE.txt",
+    "static/media/font-awesome.css": "/sc-todo/static/media/fontawesome-webfont.fee66e71.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f9f88225.js",
+    "static/css/2.2c9b5726.chunk.css",
+    "static/js/2.712695ce.chunk.js",
+    "static/css/main.a8c31ff4.chunk.css",
+    "static/js/main.9c3cec36.chunk.js"
+  ]
+}
