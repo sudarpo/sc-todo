@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const apiEndpoint = "https://jsonplaceholder.typicode.com/todos";
+const apiEndpoint = "https://kj0wjq2kkf.execute-api.ap-southeast-1.amazonaws.com/dev/tasks";
 
 const config = {
   headers: {
@@ -17,11 +17,13 @@ async function createToDo(task) {
 }
 
 async function editToDo(task) {
-  return await axios.put(`${apiEndpoint}/${task.id}`, task, config);
+  config.data = task;
+  return await axios.patch(`${apiEndpoint}/${task.id}`, task, config);
 }
 
 async function deleteToDo(task) {
-  return await axios.delete(`${apiEndpoint}/${task.id}`, task, config);
+  config.data = task;
+  return await axios.delete(`${apiEndpoint}/${task.id}`, config);
 }
 
 export { getTodoList, createToDo, editToDo, deleteToDo };

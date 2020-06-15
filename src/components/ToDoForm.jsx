@@ -3,14 +3,17 @@ import InputControl from "./common/inputControl";
 
 const ToDoForm = (props) => {
   const [taskTitle, setTaskTitle] = useState("");
+  const [oldTitle, setOldTitle] = useState("");
 
   useEffect(() => {
     // console.log(taskTitle, "useEffect taskID", props.task);
     const { task } = props;
     if (task.title) {
       setTaskTitle(task.title);
+      setOldTitle(task.title);
     } else {
       setTaskTitle("");
+      setOldTitle("");
     }
   }, [props.task.id]);
 
@@ -26,12 +29,13 @@ const ToDoForm = (props) => {
 
     const { task } = props;
     if (task.id) {
-      props.onSubmit({ title: taskTitle, id: task.id });
+      props.onSubmit({ ...task, title: taskTitle, id: task.id, oldTitle: oldTitle });
     } else {
-      props.onSubmit({ title: taskTitle, id: 0 });
+      props.onSubmit({ title: taskTitle, id: 0, completed: false });
     }
 
-    // setTaskTitle("");
+    setOldTitle("");
+    setTaskTitle("");
   };
 
   const renderTitle = () => {
@@ -45,13 +49,7 @@ const ToDoForm = (props) => {
         <div className="card">
           <div className="card-header">{renderTitle()}</div>
           <div className="card-body">
-            <InputControl
-              label="Task Detail"
-              name="taskDetail"
-              type="text"
-              value={taskTitle}
-              onChange={handleChange}
-            />
+            <InputControl label="Task Detail" name="taskDetail" type="text" value={taskTitle} onChange={handleChange} />
             <button type="submit" className="btn btn-primary btn-sm">
               Save
             </button>
