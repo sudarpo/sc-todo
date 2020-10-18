@@ -3,5 +3,5 @@ c:\Windows\Sysnative\WindowsPowerShell\v1.0\powershell.exe -Command Import-Modul
 c:\Windows\Sysnative\WindowsPowerShell\v1.0\powershell.exe -Command Install-WindowsFeature Web-Server
 
 REM
-del /F /S C:\inetpub\wwwroot\iistart.*
-del /F /S C:\inetpub\wwwroot\index.html
+rmdir /s /q C:\inetpub\wwwroot\.
+mkdir C:\inetpub\wwwroot
