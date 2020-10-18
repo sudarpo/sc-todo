@@ -16,14 +16,14 @@ phases:
 
 artifacts:
   files:
-    - "**/*"
-    - "../appspec.yml"
-    - "../scripts/*"
+    - "build/**/*"
+    - "appspec.yml"
+    - "scripts/*"
     # - build/*
 
     # - location
   name: avengers-todo-$(date +%Y-%m-%d)
-  base-directory: build
+  #base-directory: build
   #discard-paths: yes
 #cache:
 #paths:
