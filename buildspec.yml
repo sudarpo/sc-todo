@@ -16,7 +16,7 @@ phases:
 
 artifacts:
   files:
-    - build/**/*
+    - "**/*"
     # - build/*
 
     # - location
